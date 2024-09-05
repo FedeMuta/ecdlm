@@ -1,0 +1,98 @@
+html {
+  margin: 0;
+  padding: 0;
+  background-color: #333;
+  color: #fff;
+}
+
+.reproductor {
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  align-items: center;
+  bottom: 0;
+  background-color: #222;
+  color: #fff;
+  padding: 1vh;
+  width: 100vw;
+  height: 10vh;
+}
+
+.album-selector {
+  display: none;
+}
+
+.album {
+  text-align: center;
+  cursor: pointer;
+}
+
+.album img {
+  height: 10vh;
+  margin-bottom: 5vh;
+}
+
+.song-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+  max-height: 10vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.song-list li {
+  padding: 5px;
+  cursor: pointer;
+}
+
+.song-list li.active {
+  background-color: #444;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #444;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+button:hover {
+  background-color: #555;
+}
+
+.progress-bar {
+  background-color: #444;
+  height: 5px;
+  width: 90%;
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.progress {
+  background-color: #ff5722;
+  height: 100%;
+  border-radius: 3px;
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+input[type='range'] {
+  margin-left: 10px;
+  flex: 1;
+}

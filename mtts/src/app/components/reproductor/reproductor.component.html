@@ -1,0 +1,56 @@
+<div class="reproductor">
+    <audio
+      #audioElement
+      (timeupdate)="updateProgress()"
+    ></audio>
+  
+    <div class="album-selector">
+      <div
+        *ngFor="let album of albums"
+        class="album"
+        (click)="selectAlbum(album)"
+      >
+        <img [src]="album.cover" [alt]="album.name" />
+        <p>{{ album.name }}</p>
+      </div>
+    </div>
+  
+    <div class="song-list">
+      <ul>
+        <li
+          *ngFor="let song of currentAlbum.songs; let i = index"
+          [class.active]="i === currentSongIndex"
+          (click)="currentSongIndex = i; loadSong()"
+        >
+          {{ song.title }}
+        </li>
+      </ul>
+    </div>
+  
+    <div class="controls">
+      <button (click)="togglePlayPause()">
+        {{ isPlaying ? 'Pause' : 'Play' }}
+      </button>
+      <span>{{ (currentTime / 60) | number: '1.0-0' }}:{{ (currentTime % 60) | number: '2.0-0' }} / {{ (duration / 60) | number: '1.0-0' }}:{{ (duration % 60) | number: '2.0-0' }}</span>
+    </div>
+  
+    <div class="progress-bar" (click)="seek($event)">
+      <div
+        class="progress"
+        [style.width.%]="(currentTime / duration) * 100"
+      ></div>
+    </div>
+  
+    <div class="volume-control">
+      <label for="volume">Volume</label>
+      <input
+        id="volume"
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        [(ngModel)]="volume"
+        (input)="updateVolume()"
+      />
+    </div>
+  </div>
