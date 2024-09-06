@@ -50,7 +50,7 @@
       (input)="updateVolume()"
     />
   </div>
-  
+
   <div class="progress-section">
     <span *ngIf="currentTime" class="time">{{ (currentTime / 60) | number: '1.0-0' }}:{{ (currentTime % 60) | number: '2.0-0' }}</span>
     <span *ngIf="!currentTime" class="time">0:00</span>
@@ -59,7 +59,7 @@
       <input
         type="range"
         class="progress-thumb"
-        min="0"
+        min="3"
         [max]="duration"
         [value]="currentTime"
         (input)="seek($event)"
