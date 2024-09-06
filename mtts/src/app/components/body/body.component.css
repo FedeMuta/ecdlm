@@ -14,6 +14,13 @@
     text-align: center;
     color: #feacdd;
 }
+
+.letter {
+    display: inline-block;
+    transition: transform 0.5s ease;
+    position: relative;
+    white-space: pre; /* Para que los espacios se respeten */
+}
   
 .contenedor-redes {
     width: 100%;
@@ -31,17 +38,3 @@
     width: 100%; /* Se ajusta al tamaño del contenedor */
     height: auto; /* Mantiene la proporción */
 }
-
-.word-container {
-    display: flex;
-    justify-content: center;
-    position: relative;
-  }
-  
-  .letter {
-    display: inline-block;
-    transition: transform 0.5s ease;
-    position: relative;
-    white-space: pre; /* Para que los espacios se respeten */
-  }
- 
