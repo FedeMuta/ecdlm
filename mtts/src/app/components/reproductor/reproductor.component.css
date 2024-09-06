@@ -44,15 +44,38 @@ button:hover svg {
 .volume-control {
   margin-top: 10px;
   font-size: 14px;
-  display: flex;
   transform: translateY(-50%); /* Para centrar verticalmente */
-  display: flex;
-  align-items: center;
+  position: absolute;
+  left: 10%;
+  display: inline-block;
+}
+
+.volume-slider {
+  display: none; /* Ocultar la barra inicialmente */
+  position: absolute;
+  top: 45%;
+  left: 90%; /* Posicionar a la derecha del ícono */
+  transform: translateY(-50%);
+  width: 100px;
+  height: 5px;
+}
+
+@media (min-width: 600px)  {
+  .volume-control:hover .volume-slider,
+  .volume-slider:hover {
+    display: block;
+  }
+}
+
+.volume-icon {
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
 }
 
 input[type=range].styled-slider {
   height: 2.2em;
-  -webkit-appearance: none;
+  appearance: none;
   background-color: transparent;
 }
 

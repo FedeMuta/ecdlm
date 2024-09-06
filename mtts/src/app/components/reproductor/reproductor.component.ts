@@ -21,7 +21,7 @@ export class ReproductorComponent implements AfterViewInit {
   isPlaying = false;
   currentTime = 0;
   duration = 0;
-  volume = 0.5;
+  volume = 1;
   muted = false;
   currentSongIndex = 0;
   currentAlbum = {
@@ -39,6 +39,7 @@ export class ReproductorComponent implements AfterViewInit {
     this.loadSong(); 
     const audio = this.audioElement.nativeElement;
     audio.volume = this.volume;
+    this.updateVolume();
 
     audio.addEventListener('loadedmetadata', () => {
       this.duration = audio.duration;

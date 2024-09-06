@@ -22,12 +22,9 @@
     </button>
   </div>
 
-  <div class="song-info">
-    <span>{{currentAlbum.songs[currentSongIndex].title||'Song Title'}}</span>
-  </div>
-
+  <div style="width: 100%;display: flex;justify-content: center;align-items: center;">
   <div class="volume-control">
-    <div style="display: flex;align-items: center;justify-content: center;cursor: pointer;margin-right:5px;" (click)="mute()">
+    <div class="volume-icon" style="display: flex;align-items: center;justify-content: center;cursor: pointer;margin-right:5px;" (click)="mute()">
       <svg *ngIf="!muted" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
         <polygon points="11 5 6 9 6 15 11 19 11 5"></polygon>
         <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
@@ -41,7 +38,7 @@
     </div>
     <input
       id="volume"
-      class="styled-slider slider-progress"
+      class="styled-slider slider-progress volume-slider"
       type="range"
       min="0"
       max="1"
@@ -50,6 +47,11 @@
       (input)="updateVolume()"
     />
   </div>
+
+  <div class="song-info">
+    <span>{{currentAlbum.songs[currentSongIndex].title||'Song Title'}}</span>
+  </div>
+</div>
 
   <div class="progress-section">
     <span *ngIf="currentTime" class="time">{{ (currentTime / 60) | number: '1.0-0' }}:{{ (currentTime % 60) | number: '2.0-0' }}</span>
