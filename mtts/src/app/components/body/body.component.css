@@ -2,8 +2,7 @@
     display: flex;
     flex-direction: column; /* Coloca los divs en una columna */
     justify-content: center; /* Centra verticalmente los divs */
-    align-items: center; /* Centra horizontalmente los divs */
-    height: 100vh; /* Asegúrate de que el contenedor tenga suficiente altura */
+    height: 70vh; /* Asegúrate de que el contenedor tenga suficiente altura */
 }
   
 .contenedor-body h1 {
