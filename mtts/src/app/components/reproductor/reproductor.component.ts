@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 
 interface Song {
   title: string;
@@ -7,7 +7,6 @@ interface Song {
 
 interface Album {
   name: string;
-  cover: string;
   songs: Song[];
 }
 
@@ -17,63 +16,44 @@ interface Album {
   styleUrls: ['./reproductor.component.css']
 })
 
-export class ReproductorComponent implements OnInit {
+export class ReproductorComponent implements OnInit, AfterViewInit {
   @ViewChild('audioElement') audioElement!: ElementRef<HTMLAudioElement>;
   isPlaying = false;
   currentTime = 0;
   duration = 0;
-  volume = 1;
+  volume = 0.5;
+  muted = false;
   currentSongIndex = 0;
-  currentAlbum!: Album;
-
-  albums: Album[] = [
-    {
-      name: 'El Club de los Mutantes',
-      cover: 'assets/music/ECdlM/Folder.jpg',
-      songs: [
-        { title: 'Flotando', url: 'assets/music/ECdlM/01 Flotando.mp3' },
-        { title: 'El Dinero', url: 'assets/music/ECdlM/02 El dinero.mp3' },
-        { title: 'Welcome', url: 'assets/music/ECdlM/03 Welcome.mp3' },
-        { title : 'Escuchenlos', url: 'assets/music/ECdlM/04 Escuchenlos.mp3' },
-        { title: 'Calles rotas', url: 'assets/music/ECdlM/05 Calles rotas.mp3' },
-        { title: 'Un dia', url: 'assets/music/ECdlM/06 Un dia.mp3' },
-        { title: 'Shine me', url: 'assets/music/ECdlM/07 Shine me.mp3' },
-        { title: 'Nunca', url: 'assets/music/ECdlM/08 Nunca.mp3' },
-        { title: 'Suena estereo', url: 'assets/music/ECdlM/09 Suena estereo.mp3' },
-        { title: 'Ze pequeño', url: 'assets/music/ECdlM/10 Ze pequeño.mp3' },
-        { title: 'Mucha lucha', url: 'assets/music/ECdlM/11 Mucha lucha.mp3' },
-        { title: 'Jam', url: 'assets/music/ECdlM/12 Jam.mp3' },
-
-      ],
-    },
-    {
-      name: 'Esencia',
-      cover: 'assets/music/Esencia/tapa.jpg',
-      songs: [
-        { title: 'Song 1', url: 'assets/music/Esencia/CERISINA.mp3' },
-        { title: 'Song 2', url: 'assets/music/Esencia/CERISINA.mp3' },
-      ],
-    },
-  ];
+  currentAlbum = {
+    name: 'El Club de los Mutantes',
+    songs: [
+      { title: 'Escuchenlos', url: 'assets/music/Escuchenlos.mp3' },
+      { title: 'Siguelo', url: 'assets/music/SIGUELO.mp3' },
+      { title: 'Fe', url: 'assets/music/FE.mp3' },
+      { title: 'Pasajero', url: 'assets/music/PASAJERO.mp3' },
+      { title: 'El Dinero', url: 'assets/music/El dinero.mp3' },
+    ],
+  };
 
   ngOnInit() {
-    this.currentAlbum = this.albums[0];
-    this.selectAlbum(this.albums[0]); // Seleccionar el primer álbum por defecto
-    this.audioElement.nativeElement.volume = this.volume;
   }
 
-  selectAlbum(album: Album) {
-    this.currentAlbum = album;
-    this.currentSongIndex = 0;
-    this.loadSong();
+  ngAfterViewInit() {
+    this.loadSong(); 
+    const audio = this.audioElement.nativeElement;
+    audio.volume = this.volume;
+
+    audio.addEventListener('loadedmetadata', () => {
+      this.duration = audio.duration;
+    });
   }
 
   loadSong() {
-    this.audioElement.nativeElement.src =
-    this.currentAlbum.songs[this.currentSongIndex].url;
-    this.togglePlayPause();
-    this.audioElement.nativeElement.play();
-    this.isPlaying = true;    
+    const audio = this.audioElement.nativeElement;
+    audio.src = this.currentAlbum.songs[this.currentSongIndex].url;
+    if (this.isPlaying) {
+      audio.play();
+    }
   }
 
   nextSong() {
@@ -81,8 +61,18 @@ export class ReproductorComponent implements OnInit {
       this.currentSongIndex++;
       this.loadSong();
     } else {
-      this.audioElement.nativeElement.pause();
-      this.isPlaying = false;
+      this.currentSongIndex = 0;
+      this.loadSong();
+    }
+  }
+
+  previousSong() {
+    if (this.currentSongIndex > 0) {
+      this.currentSongIndex--;
+      this.loadSong();
+    } else {
+      this.currentSongIndex = this.currentAlbum.songs.length - 1;
+      this.loadSong();
     }
   }
 
@@ -104,17 +94,40 @@ export class ReproductorComponent implements OnInit {
     if (this.currentTime === this.duration) {
       this.nextSong();
     }
-
   }
 
-  seek(event: MouseEvent) {
-    const progressBar = event.currentTarget as HTMLElement;
-    const offsetX = event.offsetX;
-    const newTime = (offsetX / progressBar.offsetWidth) * this.duration;
-    this.audioElement.nativeElement.currentTime = newTime;
+  seek(event: any) {
+    const audio = this.audioElement.nativeElement;
+    const seekTime = event.target.value;
+    audio.currentTime = seekTime;
+    this.currentTime = seekTime;
   }
 
   updateVolume() {
-    this.audioElement.nativeElement.volume = this.volume;
+    const audio = this.audioElement.nativeElement;
+    audio.volume = this.volume;
+  
+    // Selecciona el control de rango de volumen
+    const volumeRange = document.getElementById('volume') as HTMLInputElement;
+    
+    // Actualiza la variable CSS para el valor de la barra de progreso
+    volumeRange.style.setProperty('--value', this.volume.toString());
   }
+
+  mute() {
+    const audio = this.audioElement.nativeElement;
+    audio.muted = !audio.muted;  // Alterna el estado de mute
+    this.muted = audio.muted;
+  
+    const volumeRange = document.getElementById('volume') as HTMLInputElement;
+  
+    if (this.muted) {
+      volumeRange.value = '0';  // Desliza el volumen a 0 visualmente
+      volumeRange.style.setProperty('--value', '0');  // Actualiza la propiedad CSS para la barra
+    } else {
+      volumeRange.value = this.volume.toString();  // Restaura el valor del volumen visualmente
+      volumeRange.style.setProperty('--value', this.volume.toString());  // Actualiza la barra de volumen
+    }
+  }
+    
 }

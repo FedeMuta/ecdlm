@@ -1,56 +1,72 @@
 <div class="reproductor">
-    <audio
+  <audio
       #audioElement
       (timeupdate)="updateProgress()"
     ></audio>
-  
-    <div class="album-selector">
-      <div
-        *ngFor="let album of albums"
-        class="album"
-        (click)="selectAlbum(album)"
-      >
-        <img [src]="album.cover" [alt]="album.name" />
-        <p>{{ album.name }}</p>
-      </div>
+  <div class="controls">
+    <button (click)="previousSong()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 6v12m8-12v12l-8-6 8-6Z"/>
+    </svg>
+    </button>
+    <button (click)="togglePlayPause()">
+      <svg *ngIf="!isPlaying" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 18V6l8 6-8 6Z"/>
+      </svg>
+      <svg *ngIf="isPlaying" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 6H8a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1Zm7 0h-1a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1Z"/>
+      </svg>
+    </button>
+    <button (click)="nextSong()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 6v12M8 6v12l8-6-8-6Z"/>
+    </svg>
+    </button>
+  </div>
+
+  <div class="song-info">
+    <span>{{currentAlbum.songs[currentSongIndex].title||'Song Title'}}</span>
+  </div>
+
+  <div class="volume-control">
+    <div style="display: flex;align-items: center;justify-content: center;cursor: pointer;margin-right:5px;" (click)="mute()">
+      <svg *ngIf="!muted" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <polygon points="11 5 6 9 6 15 11 19 11 5"></polygon>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+      </svg>
+      <svg *ngIf="muted" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+        <polygon points="11 5 6 9 6 15 11 19 11 5"></polygon>
+        <line x1="23" y1="9" x2="17" y2="15"></line>
+        <line x1="17" y1="9" x2="23" y2="15"></line>
+      </svg>
     </div>
+    <input
+      id="volume"
+      class="styled-slider slider-progress"
+      type="range"
+      min="0"
+      max="1"
+      step="0.01"
+      [(ngModel)]="volume"
+      (input)="updateVolume()"
+    />
+  </div>
   
-    <div class="song-list">
-      <ul>
-        <li
-          *ngFor="let song of currentAlbum.songs; let i = index"
-          [class.active]="i === currentSongIndex"
-          (click)="currentSongIndex = i; loadSong()"
-        >
-          {{ song.title }}
-        </li>
-      </ul>
-    </div>
-  
-    <div class="controls">
-      <button (click)="togglePlayPause()">
-        {{ isPlaying ? 'Pause' : 'Play' }}
-      </button>
-      <span>{{ (currentTime / 60) | number: '1.0-0' }}:{{ (currentTime % 60) | number: '2.0-0' }} / {{ (duration / 60) | number: '1.0-0' }}:{{ (duration % 60) | number: '2.0-0' }}</span>
-    </div>
+  <div class="progress-section">
+    <span *ngIf="currentTime" class="time">{{ (currentTime / 60) | number: '1.0-0' }}:{{ (currentTime % 60) | number: '2.0-0' }}</span>
+    <span *ngIf="!currentTime" class="time">0:00</span>
   
     <div class="progress-bar" (click)="seek($event)">
-      <div
-        class="progress"
-        [style.width.%]="(currentTime / duration) * 100"
-      ></div>
+      <input
+        type="range"
+        class="progress-thumb"
+        min="0"
+        [max]="duration"
+        [value]="currentTime"
+        (input)="seek($event)"
+      />
+      <div class="progress" [style.width.%]="(currentTime / duration) * 100"></div>
     </div>
   
-    <div class="volume-control">
-      <label for="volume">Volume</label>
-      <input
-        id="volume"
-        type="range"
-        min="0"
-        max="1"
-        step="0.01"
-        [(ngModel)]="volume"
-        (input)="updateVolume()"
-      />
-    </div>
+    <span class="time">{{ (duration / 60) | number: '1.0-0' }}:{{ (duration % 60) | number: '2.0-0' }}</span>
   </div>
+</div>

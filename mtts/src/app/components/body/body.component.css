@@ -1,0 +1,29 @@
+.contenedor-body {
+    display: flex;
+    flex-direction: column; /* Coloca los divs en una columna */
+    justify-content: center; /* Centra verticalmente los divs */
+    align-items: center; /* Centra horizontalmente los divs */
+    height: 100vh; /* Asegúrate de que el contenedor tenga suficiente altura */
+}
+  
+.contenedor-body h1 {
+    font-family: "Poppins", sans-serif;
+    text-transform: uppercase;
+    font-weight: 100;
+    font-size: 28px;
+    letter-spacing: 0.5em;
+    text-align: center;
+    color: #feacdd;
+}
+  
+.contenedor-redes {
+    width: 100%;
+    background-color: #8a0051;
+}
+  
+.redes img {
+    max-width: 100px;
+    padding: 20px;
+    display: inline-block;
+    align-items: center;
+}

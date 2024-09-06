@@ -1,5 +1,34 @@
-/* You can add global styles to this file, and also import other style files */
 html, body {
   margin: 0;
   padding: 0;
+}
+
+body {
+  margin: 0 auto;
+  background: linear-gradient(45deg, #a3467e, #8a0051, #49012b);
+  background-size: 400% 400%;
+  animation: background-move 30s ease infinite;
+  color: #fff;
+}
+
+/* Keyframes para mover el degradado suavemente */
+@keyframes background-move {
+  0% {
+    background-size: 400% 400%;
+  }
+  25% {
+    background-position: 0% 50%;
+    background-size: 300% 300%;
+  }
+  50% {
+    background-position: 100% 50%;
+    background-size: 400% 400%;
+  }
+  75% {
+    background-position: 0% 50%;
+    background-size: 100% 100%;
+  }
+  100% {
+    background-size: 400% 400%;
+  }
 }

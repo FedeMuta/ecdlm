@@ -1,98 +1,240 @@
-html {
-  margin: 0;
-  padding: 0;
-  background-color: #333;
-  color: #fff;
-}
-
 .reproductor {
-  display: flex;
-  flex-direction: row;
   position: fixed;
-  align-items: center;
   bottom: 0;
-  background-color: #222;
-  color: #fff;
-  padding: 1vh;
-  width: 100vw;
-  height: 10vh;
-}
-
-.album-selector {
-  display: none;
-}
-
-.album {
-  text-align: center;
-  cursor: pointer;
-}
-
-.album img {
-  height: 10vh;
-  margin-bottom: 5vh;
-}
-
-.song-list ul {
-  list-style: none;
-  padding: 0;
-  margin: 10px 0;
-  max-height: 10vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-.song-list li {
-  padding: 5px;
-  cursor: pointer;
-}
-
-.song-list li.active {
-  background-color: #444;
+  width: 100%;
+  padding-bottom: 20px;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Poppins", sans-serif;
+  letter-spacing: 0.3em;
+  color: #feacdd;
 }
 
 .controls {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   margin-bottom: 10px;
 }
 
 button {
-  background-color: #444;
-  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
   border: none;
-  padding: 5px 10px;
+  padding: 10px 20px;
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 100%;
 }
 
-button:hover {
-  background-color: #555;
+button svg {
+  width: 25; 
+  height: 25px;
+  color: #feacdd;
+  fill: none;
 }
 
-.progress-bar {
-  background-color: #444;
-  height: 5px;
-  width: 90%;
-  border-radius: 3px;
-  cursor: pointer;
-  position: relative;
-  margin-bottom: 10px;
-}
-
-.progress {
-  background-color: #ff5722;
-  height: 100%;
-  border-radius: 3px;
+button:hover svg {
+  color: #ffffff;
 }
 
 .volume-control {
+  margin-top: 10px;
+  font-size: 14px;
+  display: flex;
+  transform: translateY(-50%); /* Para centrar verticalmente */
   display: flex;
   align-items: center;
-  margin-top: 10px;
 }
 
-input[type='range'] {
-  margin-left: 10px;
-  flex: 1;
+input[type=range].styled-slider {
+  height: 2.2em;
+  -webkit-appearance: none;
+  background-color: transparent;
+}
+
+/* Progress support */
+input[type=range].styled-slider.slider-progress {
+  --min: 0;
+  --max: 1;
+  --value: 0.5; /* Valor inicial */
+  --range: calc(var(--max) - var(--min));
+  --ratio: calc((var(--value) - var(--min)) / var(--range));
+  --sx: calc(0.5 * 2em + var(--ratio) * (100% - 2em));
+}
+
+input[type=range].styled-slider:focus {
+  outline: none;
+}
+
+/* WebKit (Chrome, Safari) */
+input[type=range].styled-slider::-webkit-slider-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid #8a0051;
+  margin-top: -4px;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+input[type=range].styled-slider::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(#feacdd, #feacdd) 0/var(--sx) 100% no-repeat, #444;
+}
+
+input[type=range].styled-slider.slider-progress::-webkit-slider-runnable-track {
+  background: linear-gradient(#feacdd, #feacdd) 0/var(--sx) 100% no-repeat, #444;
+}
+
+/* Firefox */
+input[type=range].styled-slider::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid #8a0051;
+}
+
+input[type=range].styled-slider::-moz-range-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(#feacdd, #feacdd) 0/var(--sx) 100% no-repeat, #444;
+}
+
+input[type=range].styled-slider.slider-progress::-moz-range-track {
+  background: linear-gradient(#feacdd, #feacdd) 0/var(--sx) 100% no-repeat, #444;
+}
+
+/* Microsoft Edge */
+input[type=range].styled-slider::-ms-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid #8a0051;
+}
+
+input[type=range].styled-slider::-ms-track {
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(#feacdd, #feacdd) 0/var(--sx) 100% no-repeat, #444;
+  border-color: transparent;
+  color: transparent;
+}
+
+input[type=range].styled-slider.slider-progress::-ms-fill-lower {
+  background: linear-gradient(#feacdd, #feacdd) 0/var(--sx) 100% no-repeat, #444;
+}
+
+
+.song-info {
+  width: 20%; /* Ajusta el ancho del contenedor */
+  white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+  overflow: hidden; /* Esconde el texto que sobrepase el ancho del contenedor */
+  box-sizing: border-box;
+  position: relative;
+}
+
+.song-info span {
+  display: inline-block;
+  padding-left: 50%; /* Inicializa fuera del contenedor */
+  animation: marquee 5s linear infinite; /* Define la animación */
+  color: #fff;
+  font-size: 15px;
+  margin-bottom: 15px;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.progress-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  bottom: 0;
+  width: 80%;
+}
+
+.progress-bar {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 5px;
+  background-color: #444;
+  border-radius: 5px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.progress {
+  background-color: #feacdd;
+  height: 100%;
+  border-radius: 5px;
+}
+
+/* Estilo para el puntero (thumb) */
+input[type="range"].progress-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 5px; /* Misma altura que la barra de progreso */
+  background: transparent; /* Para que el fondo no afecte */
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* Estilo para el thumb en navegadores WebKit (Chrome, Safari) */
+input[type="range"].progress-thumb::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: 1px solid #feacdd;
+  cursor: pointer;
+  position: relative;
+  z-index: 3;
+  margin-bottom: 2px;
+}
+
+/* Estilo para el thumb en Firefox */
+input[type="range"].progress-thumb::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: 1px solid #feacdd;
+  cursor: pointer;
+}
+
+/* Para Edge */
+input[type="range"].progress-thumb::-ms-thumb {
+  width: 12px;
+  height: 12px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: 1px solid #feacdd;
+  cursor: pointer;
+}
+
+.time {
+  color: #fff;
+  font-size: 14px;
 }
