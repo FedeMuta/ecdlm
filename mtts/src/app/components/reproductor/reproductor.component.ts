@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 
 interface Song {
   title: string;
@@ -16,7 +16,7 @@ interface Album {
   styleUrls: ['./reproductor.component.css']
 })
 
-export class ReproductorComponent implements OnInit, AfterViewInit {
+export class ReproductorComponent implements AfterViewInit {
   @ViewChild('audioElement') audioElement!: ElementRef<HTMLAudioElement>;
   isPlaying = false;
   currentTime = 0;
@@ -27,16 +27,13 @@ export class ReproductorComponent implements OnInit, AfterViewInit {
   currentAlbum = {
     name: 'El Club de los Mutantes',
     songs: [
-      { title: 'Escuchenlos', url: 'assets/music/Escuchenlos.mp3' },
-      { title: 'Siguelo', url: 'assets/music/SIGUELO.mp3' },
+      { title: 'Escúchenlos', url: 'assets/music/Escuchenlos.mp3' },
+      { title: 'Síguelo', url: 'assets/music/SIGUELO.mp3' },
       { title: 'Fe', url: 'assets/music/FE.mp3' },
       { title: 'Pasajero', url: 'assets/music/PASAJERO.mp3' },
       { title: 'El Dinero', url: 'assets/music/El dinero.mp3' },
     ],
   };
-
-  ngOnInit() {
-  }
 
   ngAfterViewInit() {
     this.loadSong(); 
