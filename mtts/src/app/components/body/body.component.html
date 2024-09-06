@@ -1,5 +1,27 @@
 <div class="contenedor-body">
-    <h1><span class="letter" *ngFor="let letter of word">{{ letter }}</span></h1>  
+    <h1>
+      <div class="word-container">
+        <span class="word">
+          <span class="letter" *ngFor="let letter of 'El'.split('')">{{ letter }}</span>
+        </span>
+        <span class="space"></span> <!-- Espacio entre palabras -->
+        <span class="word">
+          <span class="letter" *ngFor="let letter of 'Club'.split('')">{{ letter }}</span>
+        </span>
+        <span class="space"></span> <!-- Espacio entre palabras -->
+        <span class="word">
+          <span class="letter" *ngFor="let letter of 'de'.split('')">{{ letter }}</span>
+        </span>
+        <span class="space"></span> <!-- Espacio entre palabras -->
+        <span class="word">
+          <span class="letter" *ngFor="let letter of 'los'.split('')">{{ letter }}</span>
+        </span>
+        <span class="space"></span> <!-- Espacio entre palabras -->
+        <span class="word">
+          <span class="letter" *ngFor="let letter of 'Mutantes'.split('')">{{ letter }}</span>
+        </span>
+      </div>
+    </h1>  
     <div class="redes">
       <a href="https://www.youtube.com/@ElclubdelosmutantesAr" target="_blank"><img src="assets\img\redes-yt.png" /></a>
       <a href="https://www.instagram.com/elcludelosmutantes/" target="_blank"><img src="assets\img\redes-instagram.png" /></a>

@@ -1,8 +1,8 @@
 .contenedor-body {
     display: flex;
-    flex-direction: column; /* Coloca los divs en una columna */
-    justify-content: center; /* Centra verticalmente los divs */
-    height: 70vh; /* Asegúrate de que el contenedor tenga suficiente altura */
+    flex-direction: column;
+    justify-content: center;
+    height: 70vh;
 }
   
 .contenedor-body h1 {
@@ -14,12 +14,20 @@
     text-align: center;
     color: #feacdd;
 }
-
+  
+.word-container .word {
+    display: inline-flex; /* Asegura que todas las letras de una palabra se mantengan juntas */
+}
+  
 .letter {
     display: inline-block;
     transition: transform 0.5s ease;
     position: relative;
-    white-space: pre; /* Para que los espacios se respeten */
+}
+  
+.space {
+    display: inline-block;
+    width: 0.7em; /* Ajusta el tamaño del espacio entre palabras */
 }
   
 .contenedor-redes {
@@ -28,13 +36,13 @@
 }
 
 .redes {
-    display: flex; /* Hace que los íconos estén en una fila */
-    justify-content: center; /* Centra los íconos horizontalmente */
-    gap: 10px; /* Espacio entre los íconos */
+    display: flex; 
+    justify-content: center;
+    gap: 10px;
 }
   
 .redes img {
-    max-width: 100px; /* Tamaño máximo del ícono */
-    width: 100%; /* Se ajusta al tamaño del contenedor */
-    height: auto; /* Mantiene la proporción */
+    max-width: 100px;
+    width: 100%;
+    height: auto;
 }
