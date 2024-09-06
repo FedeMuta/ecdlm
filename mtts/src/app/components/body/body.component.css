@@ -20,10 +20,16 @@
     width: 100%;
     background-color: #8a0051;
 }
+
+.redes {
+    display: flex; /* Hace que los íconos estén en una fila */
+    justify-content: center; /* Centra los íconos horizontalmente */
+    gap: 10px; /* Espacio entre los íconos */
+}
   
 .redes img {
-    max-width: 100px;
-    padding: 20px;
-    display: inline-block;
-    align-items: center;
+    max-width: 100px; /* Tamaño máximo del ícono */
+    width: 100%; /* Se ajusta al tamaño del contenedor */
+    height: auto; /* Mantiene la proporción */
 }
+ 
